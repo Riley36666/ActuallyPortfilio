@@ -104,6 +104,8 @@ export default function Admin() {
 
   // ---------------------- ADMIN DASHBOARD ----------------------
 
+  const sys = systemInfo?.data?.system;
+
   return (
     <div className="min-h-screen bg-black text-white p-10 space-y-12">
 
@@ -145,17 +147,63 @@ export default function Admin() {
         <div>
           <h2 className="text-3xl font-bold text-teal-300 mb-4">System Info</h2>
 
-          {!systemInfo ? (
+          {!sys ? (
             <p className="text-gray-400">Loading system info...</p>
           ) : (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 backdrop-blur-md shadow-lg"
+              className="space-y-6"
             >
-              <pre className="text-gray-300 whitespace-pre-wrap">
-                {JSON.stringify(systemInfo, null, 2)}
-              </pre>
+
+              {/* CPU */}
+              <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-bold text-teal-300 mb-2">CPU</h3>
+                <p className="text-gray-300">{sys.cpu.model}</p>
+                <p className="text-gray-400 text-sm">{sys.cpu.speed}</p>
+                <p className="text-gray-400 text-sm">{sys.cpu.cores} cores</p>
+              </div>
+
+              {/* GPU */}
+              <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-bold text-teal-300 mb-2">GPU</h3>
+                <p className="text-gray-300">{sys.gpu.model}</p>
+                <p className="text-gray-400 text-sm">{sys.gpu.vram} VRAM</p>
+              </div>
+
+              {/* RAM */}
+              <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-bold text-teal-300 mb-2">RAM</h3>
+                <p className="text-gray-300">{sys.ram.total}</p>
+              </div>
+
+              {/* STORAGE */}
+              <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-bold text-teal-300 mb-2">Storage</h3>
+                {sys.storage.devices.map((d, i) => (
+                  <div key={i} className="mb-3">
+                    <p className="text-gray-300 font-semibold">{d.model}</p>
+                    <p className="text-gray-400 text-sm">{d.type}</p>
+                    <p className="text-gray-400 text-sm">{d.capacity}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* OS */}
+              <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-bold text-teal-300 mb-2">Operating System</h3>
+                <p className="text-gray-300">{sys.os.name}</p>
+                <p className="text-gray-400 text-sm">{sys.os.version}</p>
+              </div>
+
+              {/* NETWORK */}
+              <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-bold text-teal-300 mb-2">Network</h3>
+                <p className="text-gray-300">{sys.network.adapter}</p>
+                <p className="text-gray-400 text-sm">MAC: {sys.network.mac}</p>
+                <p className="text-gray-400 text-sm">IP: {sys.network.ip}</p>
+              </div>
+
             </motion.div>
           )}
         </div>
