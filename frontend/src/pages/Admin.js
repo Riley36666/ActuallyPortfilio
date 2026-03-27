@@ -102,7 +102,7 @@ export default function Admin() {
     );
   }
 
-  // ---------------------- ADMIN DASHBOARD ----------------------
+ 
 
   const sys = systemInfo?.data?.system;
 
@@ -144,69 +144,94 @@ export default function Admin() {
         </div>
 
         {/* SYSTEM INFO */}
-        <div>
-          <h2 className="text-3xl font-bold text-teal-300 mb-4">System Info</h2>
+<div>
+  <h2 className="text-3xl font-bold text-teal-300 mb-4">System Info</h2>
 
-          {!sys ? (
-            <p className="text-gray-400">Loading system info...</p>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="space-y-6"
-            >
+  {!systemInfo ? (
+    <p className="text-gray-400">Loading system info...</p>
+  ) : (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="space-y-6"
+    >
+      {(() => {
+        const sys = systemInfo.data;
 
-              {/* CPU */}
-              <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
-                <h3 className="text-xl font-bold text-teal-300 mb-2">CPU</h3>
-                <p className="text-gray-300">{sys.cpu.model}</p>
-                <p className="text-gray-400 text-sm">{sys.cpu.speed}</p>
-                <p className="text-gray-400 text-sm">{sys.cpu.cores} cores</p>
-              </div>
+        return (
+          <>
+            {/* CPU */}
+            <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+              <h3 className="text-xl font-bold text-teal-300 mb-2">CPU</h3>
+              <p className="text-gray-300">{sys.cpu}</p>
+              <p className="text-gray-400 text-sm">{sys.cpuLoad}</p>
+              <p className="text-gray-400 text-sm">{sys.cpuTemperature}</p>
+            </div>
 
-              {/* GPU */}
-              <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
-                <h3 className="text-xl font-bold text-teal-300 mb-2">GPU</h3>
-                <p className="text-gray-300">{sys.gpu.model}</p>
-                <p className="text-gray-400 text-sm">{sys.gpu.vram} VRAM</p>
-              </div>
+            {/* MEMORY */}
+            <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+              <h3 className="text-xl font-bold text-teal-300 mb-2">Memory</h3>
+              <p className="text-gray-300">{sys.memory}</p>
+              <p className="text-gray-400 text-sm">{sys.memoryUsage}</p>
+              <p className="text-gray-400 text-sm">{sys.swap}</p>
+            </div>
 
-              {/* RAM */}
-              <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
-                <h3 className="text-xl font-bold text-teal-300 mb-2">RAM</h3>
-                <p className="text-gray-300">{sys.ram.total}</p>
-              </div>
+            {/* GPU */}
+            <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+              <h3 className="text-xl font-bold text-teal-300 mb-2">GPU</h3>
+              {sys.gpu.map((g, i) => (
+                <p key={i} className="text-gray-300">{g}</p>
+              ))}
+            </div>
 
-              {/* STORAGE */}
-              <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
-                <h3 className="text-xl font-bold text-teal-300 mb-2">Storage</h3>
-                {sys.storage.devices.map((d, i) => (
-                  <div key={i} className="mb-3">
-                    <p className="text-gray-300 font-semibold">{d.model}</p>
-                    <p className="text-gray-400 text-sm">{d.type}</p>
-                    <p className="text-gray-400 text-sm">{d.capacity}</p>
-                  </div>
-                ))}
-              </div>
+            {/* STORAGE */}
+            <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+              <h3 className="text-xl font-bold text-teal-300 mb-2">Storage</h3>
+              {sys.Storage.map((d, i) => (
+                <p key={i} className="text-gray-300">{d}</p>
+              ))}
 
-              {/* OS */}
-              <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
-                <h3 className="text-xl font-bold text-teal-300 mb-2">Operating System</h3>
-                <p className="text-gray-300">{sys.os.name}</p>
-                <p className="text-gray-400 text-sm">{sys.os.version}</p>
-              </div>
+              <h4 className="text-teal-300 font-semibold mt-4 mb-1">Usage</h4>
+              {sys.diskUsage.map((d, i) => (
+                <p key={i} className="text-gray-400 text-sm">{d}</p>
+              ))}
+            </div>
 
-              {/* NETWORK */}
-              <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
-                <h3 className="text-xl font-bold text-teal-300 mb-2">Network</h3>
-                <p className="text-gray-300">{sys.network.adapter}</p>
-                <p className="text-gray-400 text-sm">MAC: {sys.network.mac}</p>
-                <p className="text-gray-400 text-sm">IP: {sys.network.ip}</p>
-              </div>
+            {/* OS */}
+            <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+              <h3 className="text-xl font-bold text-teal-300 mb-2">Operating System</h3>
+              <p className="text-gray-300">{sys.OS}</p>
+              <p className="text-gray-400 text-sm">Kernel: {sys.kernel}</p>
+              <p className="text-gray-400 text-sm">Uptime: {sys.uptime}</p>
+            </div>
 
-            </motion.div>
-          )}
-        </div>
+            {/* NETWORK */}
+            <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+              <h3 className="text-xl font-bold text-teal-300 mb-2">Network</h3>
+
+              <h4 className="text-teal-300 font-semibold mb-1">Interfaces</h4>
+              {sys.networkInterfaces.map((n, i) => (
+                <p key={i} className="text-gray-300">{n}</p>
+              ))}
+
+              <h4 className="text-teal-300 font-semibold mt-4 mb-1">Traffic</h4>
+              {sys.networkTraffic.map((n, i) => (
+                <p key={i} className="text-gray-400 text-sm">{n}</p>
+              ))}
+            </div>
+
+            {/* BATTERY */}
+            <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+              <h3 className="text-xl font-bold text-teal-300 mb-2">Battery</h3>
+              <p className="text-gray-300">{sys.battery}</p>
+            </div>
+          </>
+        );
+      })()}
+    </motion.div>
+  )}
+</div>
+
 
       </div>
     </div>
