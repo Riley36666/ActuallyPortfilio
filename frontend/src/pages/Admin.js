@@ -1,30 +1,60 @@
-// Create backend for Emails and crap
-
-
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
+
+async function checkPassword(password) {
+  try {
+    const res = await fetch("http://localhost:9999/admin/Password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      localStorage.setItem("adminToken", data.token);
+    }
+
+    return data.success;
+  } catch {
+    return false;
+  }
+}
+
+
+async function getMessages() {
+  const res = await fetch("http://localhost:9999/admin/returnMessages", {
+    headers: {
+      "x-admin-token": localStorage.getItem("adminToken")
+    }
+  });
+
+  return await res.json();
+}
 
 export default function Admin() {
   const [authenticated, setAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState("");
   const [messages, setMessages] = useState([]);
 
-  const PASSWORD = "RileyAdmin123"; // need to handle this backend whenever i can be asked
-
-  useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("messages") || "[]");
-    setMessages(stored);
-  }, []);
-
-  function handleLogin(e) {
+  // LOGIN HANDLER
+  async function handleLogin(e) {
     e.preventDefault();
-    if (passwordInput === PASSWORD) {
+
+    const ok = await checkPassword(passwordInput);
+
+    if (ok) {
       setAuthenticated(true);
+
+      const msgs = await getMessages();
+      setMessages(msgs);
+
+      localStorage.setItem("messages", JSON.stringify(msgs));
     } else {
-      alert("Incorrect password");
     }
   }
 
+  // LOGIN SCREEN
   if (!authenticated) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center text-white">
@@ -55,6 +85,7 @@ export default function Admin() {
     );
   }
 
+  // ADMIN PANEL
   return (
     <div className="min-h-screen bg-black text-white p-10">
       <h1 className="text-4xl font-bold text-teal-300 mb-6">Messages</h1>
