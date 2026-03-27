@@ -2,7 +2,9 @@ import dotenv from "dotenv";
 import express, { Request, Response } from "express";
 import cors from "cors";
 import path from "path";
-import apiRoute from "./api/pcInfo";
+// import apiRoute from "./api/pcInfo";
+import adminRoute from "./api/admin"
+
 
 dotenv.config();
 const PORT = Number(process.env.port) || 9999;
@@ -15,7 +17,8 @@ app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 
-app.use("api", apiRoute);
+// app.use("/api", apiRoute);
+app.use("/admin", adminRoute);
 
 app.use(express.static(buildPath));
 

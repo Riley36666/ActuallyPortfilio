@@ -6,18 +6,28 @@ export default function Contact() {
   const emailRef = useRef();
   const messageRef = useRef();
 
-  function sendEmail(e) {
+  async function sendEmail(e) {
     e.preventDefault();
 
     const name = nameRef.current.value;
     const email = emailRef.current.value;
     const message = messageRef.current.value;
 
-    console.log("Name:", name);
-    console.log("Email:", email);
-    console.log("Message:", message);
+    try {
+    const res = await fetch("http://localhost:9999/admin/addMessages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ name, email, message })
+    });
 
-    // Later you can plug in EmailJS or your backend here
+    const data = await res.json();
+    return data.success; 
+  } catch (err) {
+    return false;
+  }
+    
   }
 
   return (
