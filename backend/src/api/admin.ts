@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import {getPublicIP, getPcInfo, getUser, returnInfo} from './helperFunctions';
 const router = express.Router();
 import fs from "fs";
 import path from "path";
@@ -68,6 +69,21 @@ router.get("/returnMessages", auth, (req: Request, res: Response) => {
     const raw = fs.readFileSync(filePath, "utf-8");
     const messages = JSON.parse(raw);
     res.send(messages)
+})
+
+
+
+
+
+
+
+router.get("/info", auth, async(req: Request, res: Response) => {
+  try {
+    const data = await returnInfo();
+    res.json({data});
+  } catch (err) {
+    console.error(err);
+  }
 })
 
 export default router

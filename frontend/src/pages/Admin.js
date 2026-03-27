@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
+
 async function checkPassword(password) {
   try {
     const res = await fetch("/admin/Password", {
@@ -21,6 +22,14 @@ async function checkPassword(password) {
   }
 }
 
+async function getAllInfo() {
+  const res = await fetch("/admin/info", {
+    headers: {
+      "x-admin-token": localStorage.getItem("adminToken")
+    }
+  });
+  return await res.json();
+}
 
 async function getMessages() {
   const res = await fetch("/admin/returnMessages", {
@@ -36,6 +45,7 @@ export default function Admin() {
   const [authenticated, setAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState("");
   const [messages, setMessages] = useState([]);
+  const [systemInfo, setSystemInfo] = useState(null);
 
   // LOGIN HANDLER
   async function handleLogin(e) {
@@ -109,6 +119,24 @@ export default function Admin() {
           ))}
         </div>
       )}
+      <h2 className="text-3xl font-bold text-teal-300 mt-10 mb-4">System Info</h2>
+
+      <button
+        onClick={async () => {
+          const data = await getAllInfo();
+          setSystemInfo(data);
+        }}
+        className="bg-teal-300 text-black py-2 px-4 rounded-xl hover:bg-teal-400 transition"
+      >
+        Load System Info
+      </button>
+
+      {systemInfo && (
+        <pre className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 mt-4 text-gray-300">
+          {JSON.stringify(systemInfo, null, 2)}
+        </pre>
+      )}
+
     </div>
   );
 }

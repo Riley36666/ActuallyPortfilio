@@ -17,7 +17,6 @@ app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 
-// app.use("/api", apiRoute);
 app.use("/admin", adminRoute);
 
 app.use(express.static(buildPath));
