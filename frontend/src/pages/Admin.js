@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 async function checkPassword(password) {
   try {
-    const res = await fetch("http://localhost:9999/admin/Password", {
+    const res = await fetch("/admin/Password", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ password })
@@ -23,7 +23,7 @@ async function checkPassword(password) {
 
 
 async function getMessages() {
-  const res = await fetch("http://localhost:9999/admin/returnMessages", {
+  const res = await fetch("/admin/returnMessages", {
     headers: {
       "x-admin-token": localStorage.getItem("adminToken")
     }

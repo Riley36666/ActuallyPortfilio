@@ -14,7 +14,7 @@ export default function Contact() {
     const message = messageRef.current.value;
 
     try {
-    const res = await fetch("http://localhost:9999/admin/addMessages", {
+    const res = await fetch("admin/addMessages", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
