@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
-
+import Background from "../components/Background"
 export default function Contact() {
   const nameRef = useRef();
   const emailRef = useRef();
@@ -116,23 +116,3 @@ export default function Contact() {
   );
 }
 
-function Background() {
-  return (
-    <div className="absolute inset-0 z-0">
-      <div className="absolute w-[600px] h-[600px] bg-teal-500/20 blur-3xl rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-
-      <div className="absolute inset-0 opacity-30">
-        {Array.from({ length: 40 }).map((_, i) => (
-          <span
-            key={i}
-            className="absolute w-1 h-1 bg-teal-300 rounded-full"
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-            }}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
