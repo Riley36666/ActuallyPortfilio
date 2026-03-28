@@ -49,7 +49,7 @@ function Hero() {
 function Background() {
   return (
     <div className="absolute inset-0 z-0">
-      <div className="absolute w-[600px] h-[600px] bg-teal-500/20 blur-3xl rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+      <div className="absolute w-150 h-150 bg-teal-500/20 blur-3xl rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
 
       {/* fake particles */}
       <div className="absolute inset-0 opacity-30">
