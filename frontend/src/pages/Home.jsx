@@ -31,17 +31,10 @@ function Hero() {
   className="mt-6 text-gray-400 text-lg max-w-2xl leading-relaxed"
 >
   Aspiring Software Engineer & Cyber Security enthusiast.  
-  I'm a dedicated A‑Level student with a strong passion for coding, computer science, and creative problem‑solving. I love building practical projects—from web apps to small games—that push me to learn more about the tech world.  
-  I’m currently working toward a career in software engineering and enjoy exploring topics like algorithms, JavaScript, and databases.  
-  Outside of coding, I enjoy football, designing websites, and constantly learning new skills.
 </motion.p>
 
 
-      <div className="flex gap-4 mt-8">
-        <a><button className="border border-teal-300 px-6 py-3 rounded-xl hover:bg-teal-300 hover:text-black transition">
-          Contact Me
-        </button> </a>
-      </div>
+    
     </div>
   );
 }
