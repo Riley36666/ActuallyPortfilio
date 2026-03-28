@@ -11,7 +11,7 @@ const PORT = Number(process.env.port) || 9999;
 const app = express();
 
 
-const buildPath = path.resolve(__dirname, "../../frontend/build");
+const buildPath = path.resolve(__dirname, "../../frontend/dist");
 
 app.use(cors({ origin: "*" }));
 app.use(express.json());
