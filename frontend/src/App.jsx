@@ -4,6 +4,7 @@ import Home from "./pages/Home"
 import Project from "./pages/Projects";
 import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
+import Aboutme from "./pages/AboutMe";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} /> 
+        <Route path="/aboutme" element={<Aboutme />} />
         <Route path="/project" element={<Project />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/dashboard" element={<Admin />} />
