@@ -13,33 +13,42 @@ async function checkPassword(password) {
 
     const data = await res.json();
 
-    if (data.success) {
+    if (data?.success && data?.token) {
       localStorage.setItem("adminToken", data.token);
     }
 
-    return data.success;
+    return data?.success ?? false;
   } catch {
     return false;
   }
 }
 
 async function getAllInfo() {
-  const res = await fetch("/admin/info", {
-    headers: {
-      "x-admin-token": localStorage.getItem("adminToken")
-    }
-  });
-  return await res.json();
+  try {
+    const res = await fetch("/admin/info", {
+      headers: {
+        "x-admin-token": localStorage.getItem("adminToken")
+      }
+    });
+
+    return await res.json();
+  } catch {
+    return null;
+  }
 }
 
 async function getMessages() {
-  const res = await fetch("/admin/returnMessages", {
-    headers: {
-      "x-admin-token": localStorage.getItem("adminToken")
-    }
-  });
+  try {
+    const res = await fetch("/admin/returnMessages", {
+      headers: {
+        "x-admin-token": localStorage.getItem("adminToken")
+      }
+    });
 
-  return await res.json();
+    return await res.json();
+  } catch {
+    return [];
+  }
 }
 
 // ---------------------- COMPONENT ----------------------
@@ -59,14 +68,12 @@ export default function Admin() {
     if (ok) {
       setAuthenticated(true);
 
-      // Load messages
       const msgs = await getMessages();
-      setMessages(msgs);
-      localStorage.setItem("messages", JSON.stringify(msgs));
+      setMessages(msgs ?? []);
+      localStorage.setItem("messages", JSON.stringify(msgs ?? []));
 
-      // Load system info immediately
       const info = await getAllInfo();
-      setSystemInfo(info);
+      setSystemInfo(info ?? {});
     }
   }
 
@@ -102,9 +109,9 @@ export default function Admin() {
     );
   }
 
- 
+  // ---------------------- SYSTEM INFO SAFETY ----------------------
 
-  const sys = systemInfo?.data?.system;
+  const sys = systemInfo?.data ?? {};
 
   return (
     <div className="min-h-screen bg-black text-white p-10 space-y-12">
@@ -115,14 +122,14 @@ export default function Admin() {
         <p className="text-gray-400">Welcome back. Here’s what’s happening.</p>
       </div>
 
-      {/* GRID LAYOUT */}
+      {/* GRID */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
         {/* MESSAGES */}
         <div>
           <h2 className="text-3xl font-bold text-teal-300 mb-4">Messages</h2>
 
-          {messages.length === 0 ? (
+          {messages?.length === 0 ? (
             <p className="text-gray-400">No messages yet.</p>
           ) : (
             <div className="space-y-4">
@@ -144,94 +151,101 @@ export default function Admin() {
         </div>
 
         {/* SYSTEM INFO */}
-<div>
-  <h2 className="text-3xl font-bold text-teal-300 mb-4">System Info</h2>
+        <div>
+          <h2 className="text-3xl font-bold text-teal-300 mb-4">System Info</h2>
 
-  {!systemInfo ? (
-    <p className="text-gray-400">Loading system info...</p>
-  ) : (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="space-y-6"
-    >
-      {(() => {
-        const sys = systemInfo.data;
+          {!systemInfo?.data ? (
+            <p className="text-gray-400">Loading system info...</p>
+          ) : (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
 
-        return (
-          <>
-            {/* CPU */}
-            <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
-              <h3 className="text-xl font-bold text-teal-300 mb-2">CPU</h3>
-              <p className="text-gray-300">{sys.cpu}</p>
-              <p className="text-gray-400 text-sm">{sys.cpuLoad}</p>
-              <p className="text-gray-400 text-sm">{sys.cpuTemperature}</p>
-            </div>
+              {/* CPU */}
+              <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-bold text-teal-300 mb-2">CPU</h3>
+                <p>Model: {sys.cpu?.model}</p>
+                <p className="text-gray-400 text-sm">Load: {sys.cpu?.load}</p>
+                <p className="text-gray-400 text-sm">Temperature: {sys.cpu?.temperature}</p>
+              </div>
 
-            {/* MEMORY */}
-            <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
-              <h3 className="text-xl font-bold text-teal-300 mb-2">Memory</h3>
-              <p className="text-gray-300">{sys.memory}</p>
-              <p className="text-gray-400 text-sm">{sys.memoryUsage}</p>
-              <p className="text-gray-400 text-sm">{sys.swap}</p>
-            </div>
+              {/* MEMORY */}
+              <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-bold text-teal-300 mb-2">Memory</h3>
+                <p>Total: {sys.memory?.total}</p>
+                <p className="text-gray-400 text-sm">Used: {sys.memory?.used}</p>
+                <p className="text-gray-400 text-sm">Free: {sys.memory?.free}</p>
+              </div>
 
-            {/* GPU */}
-            <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
-              <h3 className="text-xl font-bold text-teal-300 mb-2">GPU</h3>
-              {sys.gpu.map((g, i) => (
-                <p key={i} className="text-gray-300">{g}</p>
-              ))}
-            </div>
+              {/* GPU */}
+              <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-bold text-teal-300 mb-2">GPU</h3>
+                {sys.gpu?.map((g, i) => (
+                  <div key={i} className="mb-2">
+                    <p>{g.model}</p>
+                    <p className="text-gray-400 text-sm">Memory: {g.memory}</p>
+                    <p className="text-gray-400 text-sm">Temp: {g.temperature}</p>
+                  </div>
+                ))}
+              </div>
 
-            {/* STORAGE */}
-            <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
-              <h3 className="text-xl font-bold text-teal-300 mb-2">Storage</h3>
-              {sys.Storage.map((d, i) => (
-                <p key={i} className="text-gray-300">{d}</p>
-              ))}
+              {/* STORAGE */}
+              <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-bold text-teal-300 mb-2">Storage</h3>
+                {sys.Storage?.map((d, i) => (
+                  <div key={i} className="mb-2">
+                    <p>{d.device}</p>
+                    <p className="text-gray-400 text-sm">Size: {d.size}</p>
+                    <p className="text-gray-400 text-sm">Used: {d.used}</p>
+                  </div>
+                ))}
 
-              <h4 className="text-teal-300 font-semibold mt-4 mb-1">Usage</h4>
-              {sys.diskUsage.map((d, i) => (
-                <p key={i} className="text-gray-400 text-sm">{d}</p>
-              ))}
-            </div>
+                <h4 className="text-teal-300 font-semibold mt-4 mb-1">Usage</h4>
+                {sys.diskUsage?.map((d, i) => (
+                  <p key={i} className="text-gray-400 text-sm">{d}</p>
+                ))}
+              </div>
 
-            {/* OS */}
-            <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
-              <h3 className="text-xl font-bold text-teal-300 mb-2">Operating System</h3>
-              <p className="text-gray-300">{sys.OS}</p>
-              <p className="text-gray-400 text-sm">Kernel: {sys.kernel}</p>
-              <p className="text-gray-400 text-sm">Uptime: {sys.uptime}</p>
-            </div>
+              {/* OS */}
+              <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-bold text-teal-300 mb-2">Operating System</h3>
+                <p>{sys.OS}</p>
+                <p className="text-gray-400 text-sm">Kernel: {sys.kernel}</p>
+                <p className="text-gray-400 text-sm">Uptime: {sys.uptime}</p>
+              </div>
 
-            {/* NETWORK */}
-            <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
-              <h3 className="text-xl font-bold text-teal-300 mb-2">Network</h3>
+              {/* NETWORK */}
+              <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-bold text-teal-300 mb-2">Network</h3>
 
-              <h4 className="text-teal-300 font-semibold mb-1">Interfaces</h4>
-              {sys.networkInterfaces.map((n, i) => (
-                <p key={i} className="text-gray-300">{n}</p>
-              ))}
+                <h4 className="text-teal-300 font-semibold mb-1">Interfaces</h4>
+                {sys.networkInterfaces?.map((n, i) => (
+                  <div key={i} className="mb-2">
+                    <p>{n.name}</p>
+                    <p className="text-gray-400 text-sm">IP: {n.ip}</p>
+                    <p className="text-gray-400 text-sm">MAC: {n.mac}</p>
+                  </div>
+                ))}
 
-              <h4 className="text-teal-300 font-semibold mt-4 mb-1">Traffic</h4>
-              {sys.networkTraffic.map((n, i) => (
-                <p key={i} className="text-gray-400 text-sm">{n}</p>
-              ))}
-            </div>
+                <h4 className="text-teal-300 font-semibold mt-4 mb-1">Traffic</h4>
+                {sys.networkTraffic?.map((n, i) => (
+                  <div key={i} className="mb-2">
+                    <p className="text-gray-400 text-sm">RX: {n.rx}</p>
+                    <p className="text-gray-400 text-sm">TX: {n.tx}</p>
+                  </div>
+                ))}
+              </div>
 
-            {/* BATTERY */}
-            <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
-              <h3 className="text-xl font-bold text-teal-300 mb-2">Battery</h3>
-              <p className="text-gray-300">{sys.battery}</p>
-            </div>
-          </>
-        );
-      })()}
-    </motion.div>
-  )}
-</div>
+              {/* BATTERY */}
+              <div className="bg-gray-900/40 border border-teal-300/40 rounded-xl p-6 shadow-lg">
+                <h3 className="text-xl font-bold text-teal-300 mb-2">Battery</h3>
+                <p>Percent: {sys.battery?.percent}</p>
+                <p className="text-gray-400 text-sm">
+                  Charging: {sys.battery?.charging ? "Yes" : "No"}
+                </p>
+              </div>
 
+            </motion.div>
+          )}
+        </div>
 
       </div>
     </div>

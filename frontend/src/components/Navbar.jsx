@@ -29,8 +29,6 @@ export default function Navbar() {
         </Link>
         <Link to="/contact" className={linkClasses("/contact")}>
         Contact</Link>
-        <Link to="/admin" className={linkClasses("/admin")}>
-        Admin</Link>
       </div>
 
       {/* Right side visitor indicator */}
