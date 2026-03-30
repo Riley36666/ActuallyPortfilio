@@ -1,5 +1,8 @@
 import { motion } from "framer-motion";
+import { SiPython, SiJavascript, SiTypescript } from "react-icons/si";
+import { DiNodejsSmall, DiJava  } from "react-icons/di";
 import Background from "../components/Background";
+
 export default function About() {
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden">
@@ -55,23 +58,36 @@ function AboutSection() {
         className="grid md:grid-cols-3 gap-6 mt-10"
       >
         <div className="bg-slate-800 rounded-xl p-6 text-center hover:scale-105 transition">
-          <h3 className="text-teal-300 font-semibold">💻 Development</h3>
+          <h3 className="text-teal-300 font-semibold"> Development</h3>
           <p className="text-gray-400 mt-2 text-sm">
-            Building web apps, experimenting with new tech, and improving daily.
+            I build full-stack applications, python apps, and backend systems,
+            focusing on performance and clean architecture.
           </p>
         </div>
 
         <div className="bg-slate-800 rounded-xl p-6 text-center hover:scale-105 transition">
-          <h3 className="text-teal-300 font-semibold">🔐 Cyber Security</h3>
+          <h3 className="text-teal-300 font-semibold"> Cyber Security</h3>
           <p className="text-gray-400 mt-2 text-sm">
             Interested in security, systems, and understanding how things work underneath.
           </p>
         </div>
 
-        <div className="bg-slate-800 rounded-xl p-6 text-center hover:scale-105 transition">
-          <h3 className="text-teal-300 font-semibold">⚡ Growth</h3>
-          <p className="text-gray-400 mt-2 text-sm">
-            Constantly learning, building, and pushing my limits as a developer.
+        <div className="bg-slate-800 rounded-2xl p-6 text-center hover:scale-105 hover:shadow-xl transition-all duration-300">
+          <h3 className="text-teal-300 font-semibold text-lg mb-4">
+            Tech Stack
+          </h3>
+
+          <div className="flex justify-center gap-4 text-2xl mb-3">
+            <SiPython className="text-yellow-400" />
+            <SiJavascript className="text-yellow-300" />
+            <SiTypescript className="text-blue-400" />
+            <DiJava className="text-orange-400" />
+            <DiNodejsSmall className="text-green-400" />
+          </div>
+
+          <p className="text-gray-400 text-sm">
+            Building APIs, web apps, and automation tools with
+            Python, JavaScript, TypeScript, Java, and Node.js.
           </p>
         </div>
       </motion.div>

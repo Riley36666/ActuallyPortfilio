@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Footer from "./components/footer";
 import Home from "./pages/Home"
 import Project from "./pages/Projects";
 import Contact from "./pages/Contact";
@@ -17,6 +18,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/dashboard" element={<Admin />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import "./Home.css"
 import Background from "../components/MainBackground";
 
 
+
 export default function Home() {
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden">
@@ -22,7 +23,7 @@ function Hero() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-teal-200 to-teal-400 text-transparent bg-clip-text"
+        className="text-5xl md:text-7xl font-bold bg-linear-to-r from-teal-200 to-teal-400 text-transparent bg-clip-text"
       >
         Riley Knowles
       </motion.h1>

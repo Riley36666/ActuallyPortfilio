@@ -1,43 +1,45 @@
 import { motion } from "framer-motion";
+import Background from "../components/Background";
+
 
 export default function Projects() {
   const repos = [
     {
-      name: "MyOwnPassManager",
+      name: "Password Manager",
       lang: "Python",
-      desc: "Custom password manager built from scratch.",
-      link: "https://github.com/Riley36666/MyOwnPassManager"
+      desc: "Encrypted password manager with secure storage and CLI interface.",
+      link: "https://github.com/Riley36666/MyOwnPassManager",
+      featured: true,
+      stack: ["Python", "Encryption", "CLI"]
     },
     {
-      name: "ActuallyPortfolio",
+      name: "Portfolio",
       lang: "JavaScript",
-      desc: "My personal portfolio website.",
-      link: "https://github.com/Riley36666/ActuallyPortfolio"
+      desc: "Personal portfolio built with React, Tailwind and smooth animations.",
+      link: "https://github.com/Riley36666/ActuallyPortfilio",
+      stack: ["React", "Tailwind", "Framer Motion"]
     },
     {
-      name: "PasswordManagerWebintegration",
+      name: "Password Manager Web",
       lang: "TypeScript",
-      desc: "Web integration for password manager.",
-      link: "https://github.com/Riley36666/PasswordManagerWebintegration"
+      desc: "Frontend interface for interacting with the password manager.",
+      link: "https://github.com/Riley36666/PasswordManagerWebintegration",
+      stack: ["TypeScript", "Web UI"]
     },
     {
-      name: "JavaGame",
+      name: "Java Game",
       lang: "Java",
-      desc: "Game built using Java fundamentals.",
-      link: "https://github.com/Riley36666/JavaGame"
+      desc: "2D platformer inspired by Mario with custom physics and logic.",
+      link: "https://github.com/Riley36666/JavaGame",
+      stack: ["Java", "Game Logic"]
     },
     {
-      name: "Sideproject",
-      lang: "JavaScript",
-      desc: "Experimental full-stack side project.",
-      link: "https://github.com/Riley36666/Sideproject"
-    },
-    {
-      name: "ImposterRemake",
+      name: "Imposter Remake",
       lang: "TypeScript",
-      desc: "Among Us-style remake project.",
-      link: "https://github.com/Riley36666/ImposterRemake"
-    }
+      desc: "Multiplayer-style party game focused on identifying the odd one out.",
+      link: "https://github.com/Riley36666/ImposterRemake",
+      stack: ["TypeScript", "Game Logic"]
+    },
   ];
 
   return (
@@ -61,8 +63,7 @@ export default function Projects() {
           transition={{ delay: 0.2 }}
           className="text-gray-400 text-center mt-6 max-w-2xl mx-auto"
         >
-          A collection of projects I’ve built while learning and experimenting
-          with different technologies.
+          Projects I’ve built while learning, experimenting, and improving as a developer.
         </motion.p>
 
         {/* Grid */}
@@ -71,11 +72,7 @@ export default function Projects() {
           animate="show"
           variants={{
             hidden: {},
-            show: {
-              transition: {
-                staggerChildren: 0.1
-              }
-            }
+            show: { transition: { staggerChildren: 0.1 } }
           }}
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16"
         >
@@ -89,25 +86,48 @@ export default function Projects() {
                 hidden: { opacity: 0, y: 20 },
                 show: { opacity: 1, y: 0 }
               }}
-              whileHover={{ scale: 1.04 }}
-              className="group bg-slate-900/60 border border-white/10 rounded-2xl p-6 backdrop-blur-xl 
-              hover:border-teal-300/40 hover:shadow-[0_0_25px_rgba(45,212,191,0.2)] transition"
+              whileHover={{ scale: 1.03, y: -4 }}
+              className={`group relative bg-slate-900/60 border border-white/10 rounded-2xl p-6 backdrop-blur-xl 
+              transition-all duration-300
+              hover:border-teal-300/40 hover:shadow-[0_10px_30px_rgba(45,212,191,0.25)]
+              ${repo.featured ? "md:col-span-2 lg:col-span-2" : ""}`}
             >
+              {/* Glow overlay */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition 
+              bg-gradient-to-br from-teal-500/10 to-transparent rounded-2xl pointer-events-none" />
+
               {/* Title */}
-              <h3 className="text-lg font-semibold group-hover:text-teal-300 transition">
+              <h3 className="text-lg font-semibold group-hover:text-teal-300 transition relative z-10">
                 {repo.name}
               </h3>
 
               {/* Description */}
-              <p className="text-gray-400 text-sm mt-3 leading-relaxed">
+              <p className="text-gray-400 text-sm mt-3 leading-relaxed relative z-10">
                 {repo.desc}
               </p>
 
+              {/* Tech stack */}
+              <div className="flex flex-wrap gap-2 mt-4 relative z-10">
+                {repo.stack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="text-xs bg-slate-800 px-2 py-1 rounded text-gray-300"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
               {/* Language */}
-              <div className="flex items-center gap-2 mt-4 text-sm text-gray-400">
+              <div className="flex items-center gap-2 mt-4 text-sm text-gray-400 relative z-10">
                 <span className="w-2 h-2 rounded-full bg-teal-400"></span>
                 {repo.lang}
               </div>
+
+              {/* CTA */}
+              <p className="text-teal-300 text-xs mt-4 opacity-0 group-hover:opacity-100 transition relative z-10">
+                View Project →
+              </p>
             </motion.a>
           ))}
         </motion.div>
@@ -117,24 +137,3 @@ export default function Projects() {
   );
 }
 
-function Background() {
-  return (
-    <div className="absolute inset-0 z-0">
-      <div className="absolute w-[500px] h-[500px] bg-teal-500/20 blur-3xl rounded-full 
-                      top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse" />
-
-      <div className="absolute inset-0 opacity-30">
-        {Array.from({ length: 40 }).map((_, i) => (
-          <span
-            key={i}
-            className="absolute w-1 h-1 bg-teal-300 rounded-full"
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-            }}
-          />
-        ))}
-      </div>
-    </div>
-  );
-} 
