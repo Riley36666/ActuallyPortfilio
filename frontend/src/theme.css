@@ -16,3 +16,14 @@ html.theme-rose {
 button {
   border: 2px solid red;
 }
+/* existing styles above */
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .nav {
+    display: none;
+  }
+}
