@@ -2,14 +2,16 @@ import dotenv from "dotenv";
 import express, { Request, Response } from "express";
 import cors from "cors";
 import path from "path";
-// import apiRoute from "./api/pcInfo";
+import http from "http";
 import adminRoute from "./api/admin"
+
+
 
 
 dotenv.config();
 const PORT = Number(process.env.port) || 9999;
 const app = express();
-
+const server = http.createServer(app);
 
 const buildPath = path.resolve(__dirname, "../../frontend/dist");
 
@@ -19,7 +21,9 @@ app.use(express.json());
 
 app.use("/admin", adminRoute);
 
+
 app.use(express.static(buildPath));
+
 
 
 app.get(/.*/, (req: Request, res: Response) => {
