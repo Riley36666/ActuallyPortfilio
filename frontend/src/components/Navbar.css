@@ -31,3 +31,14 @@
 .nav-links a:hover {
   color: white;
 }
+/* existing styles above */
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .nav {
+    display: none;
+  }
+}
