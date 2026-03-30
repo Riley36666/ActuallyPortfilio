@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
-import Background from "../components/Background"
+import Background from "../components/Background";
+
+
 export default function Contact() {
   const nameRef = useRef();
   const emailRef = useRef();
@@ -33,7 +35,7 @@ export default function Contact() {
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden">
       <Background />
-
+ 
       <div className="flex flex-col items-center pt-32 px-6 relative z-10">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
