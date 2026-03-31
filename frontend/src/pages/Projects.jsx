@@ -23,7 +23,7 @@ export default function Projects() {
       name: "Password Manager Web",
       lang: "TypeScript",
       desc: "Frontend interface for interacting with the password manager.",
-      link: "https://github.com/Riley36666/PasswordManagerWebintegration",
+      link: "https://github.com/Riley36666/PasswordManagerWebintergration",
       stack: ["TypeScript", "Web UI"]
     },
     {
