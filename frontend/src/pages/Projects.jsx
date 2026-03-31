@@ -52,7 +52,7 @@ export default function Projects() {
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-5xl md:text-6xl font-bold text-center bg-gradient-to-r from-teal-200 to-teal-400 text-transparent bg-clip-text"
+          className="text-5xl md:text-6xl font-bold text-center bg-linear-to-r from-teal-200 to-teal-400 text-transparent bg-clip-text"
         >
           My Projects
         </motion.h1>
@@ -94,7 +94,7 @@ export default function Projects() {
             >
               {/* Glow overlay */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition 
-              bg-gradient-to-br from-teal-500/10 to-transparent rounded-2xl pointer-events-none" />
+              bg-linear-to-br from-teal-500/10 to-transparent rounded-2xl pointer-events-none" />
 
               {/* Title */}
               <h3 className="text-lg font-semibold group-hover:text-teal-300 transition relative z-10">
