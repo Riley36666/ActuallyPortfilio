@@ -74,7 +74,7 @@ export default function TerminalPage() {
 
   const wsUrl =
     import.meta.env.VITE_WS_URL ||
-    `ws://${window.location.host}`;
+    `wss://${window.location.host}`;
 
   const ws = new WebSocket(wsUrl);
 
