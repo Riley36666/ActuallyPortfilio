@@ -28,21 +28,17 @@ app.use("/admin", adminRoute);
 
 
 app.use(express.static(buildPath));
-app.use(express.static("dist"));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist/index.html"));
+
+
+
+app.get(/.*/, (req: Request, res: Response) => {
+  res.sendFile(path.join(buildPath, "index.html"));
 });
 
-
-
-// app.get(/.*/, (req: Request, res: Response) => {
-//   res.sendFile(path.join(buildPath, "index.html"));
-// });
-
-app.get("/", (req:Request, res:Response) => {
-  res.send("Hello world");
-})
+// app.get("/", (req:Request, res:Response) => {
+//   res.send("Hello world");
+// })
 
 server.listen(PORT, "0.0.0.0", () => {
   console.log(`Server started at http://localhost:${PORT}`);
