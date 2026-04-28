@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import Background from "../components/Background";
-
 
 export default function Projects() {
   const repos = [
@@ -8,9 +8,10 @@ export default function Projects() {
       name: "Password Manager",
       lang: "Python",
       desc: "Encrypted password manager with secure storage and CLI interface.",
-      link: "https://github.com/Riley36666/MyOwnPassManager",
+      link: "/pythoncli",
       featured: true,
-      stack: ["Python", "Encryption", "CLI"]
+      stack: ["Python", "Encryption", "CLI"],
+      internal: true
     },
     {
       name: "Portfolio",
@@ -77,58 +78,98 @@ export default function Projects() {
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16"
         >
           {repos.map((repo) => (
-            <motion.a
-              key={repo.name}
-              href={repo.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                show: { opacity: 1, y: 0 }
-              }}
-              whileHover={{ scale: 1.03, y: -4 }}
-              className={`group relative bg-slate-900/60 border border-white/10 rounded-2xl p-6 backdrop-blur-xl 
-              transition-all duration-300
-              hover:border-teal-300/40 hover:shadow-[0_10px_30px_rgba(45,212,191,0.25)]
-              ${repo.featured ? "md:col-span-2 lg:col-span-2" : ""}`}
-            >
-              {/* Glow overlay */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition 
-              bg-linear-to-br from-teal-500/10 to-transparent rounded-2xl pointer-events-none" />
+            repo.internal ? (
+              <Link to={repo.link} key={repo.name}>
+                <motion.div
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    show: { opacity: 1, y: 0 }
+                  }}
+                  whileHover={{ scale: 1.03, y: -4 }}
+                  className={`group relative bg-slate-900/60 border border-white/10 rounded-2xl p-6 backdrop-blur-xl 
+                  transition-all duration-300
+                  hover:border-teal-300/40 hover:shadow-[0_10px_30px_rgba(45,212,191,0.25)]
+                  ${repo.featured ? "md:col-span-2 lg:col-span-2" : ""}`}
+                >
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition 
+                  bg-linear-to-br from-teal-500/10 to-transparent rounded-2xl pointer-events-none" />
 
-              {/* Title */}
-              <h3 className="text-lg font-semibold group-hover:text-teal-300 transition relative z-10">
-                {repo.name}
-              </h3>
+                  <h3 className="text-lg font-semibold group-hover:text-teal-300 transition relative z-10">
+                    {repo.name}
+                  </h3>
 
-              {/* Description */}
-              <p className="text-gray-400 text-sm mt-3 leading-relaxed relative z-10">
-                {repo.desc}
-              </p>
+                  <p className="text-gray-400 text-sm mt-3 leading-relaxed relative z-10">
+                    {repo.desc}
+                  </p>
 
-              {/* Tech stack */}
-              <div className="flex flex-wrap gap-2 mt-4 relative z-10">
-                {repo.stack.map((tech) => (
-                  <span
-                    key={tech}
-                    className="text-xs bg-slate-800 px-2 py-1 rounded text-gray-300"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
+                  <div className="flex flex-wrap gap-2 mt-4 relative z-10">
+                    {repo.stack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="text-xs bg-slate-800 px-2 py-1 rounded text-gray-300"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
 
-              {/* Language */}
-              <div className="flex items-center gap-2 mt-4 text-sm text-gray-400 relative z-10">
-                <span className="w-2 h-2 rounded-full bg-teal-400"></span>
-                {repo.lang}
-              </div>
+                  <div className="flex items-center gap-2 mt-4 text-sm text-gray-400 relative z-10">
+                    <span className="w-2 h-2 rounded-full bg-teal-400"></span>
+                    {repo.lang}
+                  </div>
 
-              {/* CTA */}
-              <p className="text-teal-300 text-xs mt-4 opacity-0 group-hover:opacity-100 transition relative z-10">
-                View Project →
-              </p>
-            </motion.a>
+                  <p className="text-teal-300 text-xs mt-4 opacity-0 group-hover:opacity-100 transition relative z-10">
+                    View Project →
+                  </p>
+                </motion.div>
+              </Link>
+            ) : (
+              <motion.a
+                key={repo.name}
+                href={repo.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  show: { opacity: 1, y: 0 }
+                }}
+                whileHover={{ scale: 1.03, y: -4 }}
+                className={`group relative bg-slate-900/60 border border-white/10 rounded-2xl p-6 backdrop-blur-xl 
+                transition-all duration-300
+                hover:border-teal-300/40 hover:shadow-[0_10px_30px_rgba(45,212,191,0.25)]`}
+              >
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition 
+                bg-linear-to-br from-teal-500/10 to-transparent rounded-2xl pointer-events-none" />
+
+                <h3 className="text-lg font-semibold group-hover:text-teal-300 transition relative z-10">
+                  {repo.name}
+                </h3>
+
+                <p className="text-gray-400 text-sm mt-3 leading-relaxed relative z-10">
+                  {repo.desc}
+                </p>
+
+                <div className="flex flex-wrap gap-2 mt-4 relative z-10">
+                  {repo.stack.map((tech) => (
+                    <span
+                      key={tech}
+                      className="text-xs bg-slate-800 px-2 py-1 rounded text-gray-300"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-2 mt-4 text-sm text-gray-400 relative z-10">
+                  <span className="w-2 h-2 rounded-full bg-teal-400"></span>
+                  {repo.lang}
+                </div>
+
+                <p className="text-teal-300 text-xs mt-4 opacity-0 group-hover:opacity-100 transition relative z-10">
+                  View Project →
+                </p>
+              </motion.a>
+            )
           ))}
         </motion.div>
 
@@ -136,4 +177,3 @@ export default function Projects() {
     </div>
   );
 }
-

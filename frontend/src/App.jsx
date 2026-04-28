@@ -9,6 +9,9 @@ import Admin from "./pages/Admin";
 import Aboutme from "./pages/AboutMe";
 import TerminalPage from "./pages/terminal";
 
+// project pages
+import Pythoncli from "./pages/projectPages/pythoncli";
+
 
 function MainLayout({ children }) {
   return (
@@ -64,6 +67,16 @@ function App() {
         }
       />
       <Route path="/terminal" element={<TerminalPage />} />
+
+      {/* project pages */}
+
+      <Route path="/pythoncli" element={
+        <MainLayout>
+          <Pythoncli />
+        </MainLayout>
+      } />
+
+
     </Routes>
   );
 }

@@ -21,7 +21,7 @@ function AboutSection() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="text-4xl md:text-5xl font-bold text-center bg-gradient-to-r from-teal-200 to-teal-400 text-transparent bg-clip-text"
+        className="text-4xl md:text-5xl font-bold text-center bg-linear-to-r from-teal-200 to-teal-400 text-transparent bg-clip-text"
       >
         About Me
       </motion.h2>

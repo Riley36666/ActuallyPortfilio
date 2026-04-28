@@ -15,7 +15,7 @@ const PORT_TERMINAL = 3001;
 const app = express();
 
 const server = http.createServer(app);
-const wss = new WebSocketServer({ server });
+const wss = new WebSocketServer({ server, path: "/ws"});
 setupTerminal(wss);
 
 const buildPath = path.resolve(__dirname, "../../frontend/dist");
