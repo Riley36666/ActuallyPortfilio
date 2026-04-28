@@ -20,7 +20,10 @@ function CliProject() {
     >
       <h1 className="text-cyan-300 font-semibold text-xl">
         Python 
-      </h1>
+      </h1>,
+      <p1 className="text-red-500 font-semibold text-xs">
+        WIP DOing this
+        </p1>,
     </motion.div>
   );
 }
