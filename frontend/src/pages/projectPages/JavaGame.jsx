@@ -1,5 +1,5 @@
 import Background from "../../components/MainBackground"
-import { motion } from "framer-motion"
+
 
 export default function JavaGame() {
     return (
