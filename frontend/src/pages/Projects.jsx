@@ -33,14 +33,7 @@ export default function Projects() {
       desc: "2D platformer inspired by Mario with custom physics and logic.",
       link: "/javagame",
       stack: ["Java", "Game Logic"]
-    },
-    {
-      name: "Imposter Remake",
-      lang: "TypeScript",
-      desc: "Multiplayer-style party game focused on identifying the odd one out.",
-      link: "https://github.com/Riley36666/ImposterRemake",
-      stack: ["TypeScript", "Game Logic"]
-    },
+    }
   ];
 
   return (

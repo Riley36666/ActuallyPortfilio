@@ -7,7 +7,6 @@ import Project from "./pages/Projects";
 import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
 import Aboutme from "./pages/AboutMe";
-import TerminalPage from "./pages/terminal";
 
 // project pages
 import Pythoncli from "./pages/projectPages/pythoncli";
@@ -66,7 +65,6 @@ function App() {
           </MainLayout>
         }
       />
-      <Route path="/terminal" element={<TerminalPage />} />
 
       {/* project pages */}
 
