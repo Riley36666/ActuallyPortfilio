@@ -17,7 +17,7 @@ export default function Projects() {
       name: "Portfolio",
       lang: "JavaScript",
       desc: "Personal portfolio built with React, Tailwind and smooth animations.",
-      link: "https://github.com/Riley36666/ActuallyPortfilio",
+      link: "https://github.com/Riley36666/Portfilio",
       stack: ["React", "Tailwind", "Framer Motion"]
     },
     {
