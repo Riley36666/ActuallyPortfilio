@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import {getPublicIP, getPcInfo, getUser, returnInfo} from './HelperFunctions';
+import {returnInfo} from './HelperFunctions';
 import { auth } from './Auth'
 const router = express.Router();
 import fs from "fs";
@@ -10,7 +10,7 @@ import crypto from "crypto";
 router.post("/Password", async (req, res) => {
   const { password } = req.body;
   const backendPass = process.env.PASSWORD;
-
+  if(checkPasswordFile()){
   if (password === backendPass) {
     const token = crypto.randomBytes(32).toString("hex");
     try {
@@ -23,11 +23,12 @@ router.post("/Password", async (req, res) => {
   }
 
   res.json({ success: false });
-});
+}});
 
 
 router.post("/addMessages", async (req: Request, res: Response) => {
   const { name, email, message } = req.body;
+  if(checkMessageFile()){
   const filePath = path.join(__dirname, "../data/messages.json");
   try {
     const raw = await fs.promises.readFile(filePath, "utf-8");
@@ -39,9 +40,10 @@ router.post("/addMessages", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({ success: false, error: "Failed to save message" });
   }
-});
+}});
 
 router.get("/returnMessages", auth, async (req: Request, res: Response) => {
+  if(checkMessageFile()){
   const filePath = path.join(__dirname, "../data/messages.json");
   try {
     const raw = await fs.promises.readFile(filePath, "utf-8");
@@ -51,10 +53,7 @@ router.get("/returnMessages", auth, async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({ error: "Failed to read messages" });
   }
-})
-
-
-
+}})
 
 
 
@@ -68,4 +67,36 @@ router.get("/info", auth, async(req: Request, res: Response) => {
   }
 })
 
+
+function checkPasswordFile() {
+  const dataFolder = path.join(__dirname, '../data');
+  const passwordFile = path.join(dataFolder, 'session.json');
+
+  if (!fs.existsSync(dataFolder)) {
+    fs.mkdirSync(dataFolder, { recursive: true });
+  }
+
+  if (!fs.existsSync(passwordFile)) {
+    fs.writeFileSync(passwordFile, '{}');
+    return true;
+  }
+
+  return true;
+}
+
+function checkMessageFile() {
+  const dataFolder = path.join(__dirname, '../data');
+  const messageFile = path.join(dataFolder, 'messages.json');
+
+  if (!fs.existsSync(dataFolder)) {
+    fs.mkdirSync(dataFolder, { recursive: true });
+  }
+
+  if (!fs.existsSync(messageFile)) {
+    fs.writeFileSync(messageFile, '[]');
+    return true;
+  }
+
+  return true;
+}
 export default router

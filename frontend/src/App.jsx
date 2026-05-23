@@ -5,7 +5,7 @@ import Footer from "./components/footer";
 import Home from "./pages/Home";
 import Project from "./pages/Projects";
 import Contact from "./pages/Contact";
-import Admin from "./pages/Admin";
+import Admin from "./pages/adminPages/Admin";
 import Aboutme from "./pages/AboutMe";
 
 // project pages
